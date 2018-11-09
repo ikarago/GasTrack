@@ -4,7 +4,11 @@ It uses a version of MVVM that's pretty crappy because I was just toying around 
 
 ## Get the app
 The project was never released in the Microsoft Store, so the only way to get the app is by cloning this repo and build it yourself.
-All you'll need is Visual Studio, the UWP SDK of anything above version 10586, SQLite for UWP v3.25.3.0 and this repository.
+All you'll need to build is:
+* Visual Studio
+* UWP SDK of anything from or above version 10586
+* SQLite for UWP v3.25.3.0 
+* this repository.
 
 ## Supported Windows versions
 **Minimal suppored version:** 10586 (November Update)
