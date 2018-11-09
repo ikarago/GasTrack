@@ -29,7 +29,7 @@ Most functional code is the same as when I used it in 2016. The only changes mad
 * Removed the Microsoft Store Engagement Framework reference
 * Disabled the links using the Microsoft Store Engagement Framework
 
-I don't plan to work on this project anymore, as this is a legacy app. I uploaded this for historical purposes and for reference work to other UWP apps.
+I don't plan to work on this project anymore, as this is a legacy app. I uploaded this for archival purposes and as reference work for other UWP apps.
 
 ## Support me
 **Like this project?** Buy me a coffee: https://paypal.me/ikarago
