@@ -1,0 +1,486 @@
+﻿<Page
+    x:Class="GasTrack.View.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GasTrack.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Transitions>
+        <TransitionCollection>
+            <EdgeUIThemeTransition Edge="Top"/>
+        </TransitionCollection>
+    </Page.Transitions>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <RelativePanel>
+            <RelativePanel x:Name="gridTitle"
+                           Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                           Height="48"
+                           RelativePanel.AlignLeftWithPanel="True"
+                           RelativePanel.AlignRightWithPanel="True">
+                <TextBlock x:Name="tblSettingsTitleLogo"
+                           FontFamily="Segoe MDL2 Assets"
+                           Text="&#xE115;"
+                           FontWeight="Light"
+                           Margin="12,8"
+                           FontSize="22"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           RelativePanel.AlignLeftWithPanel="True"/>
+                <TextBlock x:Name="tblSettingsTitleText"
+                           Text="Settings"
+                           Margin="0,8"
+                           FontWeight="SemiLight"
+                           FontSize="22"
+                           RelativePanel.RightOf="tblSettingsTitleLogo"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"/>
+            </RelativePanel>
+
+            <Pivot x:Name="pivSettings"
+                   Background="{ThemeResource AppBarBackgroundThemeBrush}"
+                   HorizontalContentAlignment="Stretch"
+                   RelativePanel.AlignLeftWithPanel="True"
+                   RelativePanel.AlignRightWithPanel="True"
+                   RelativePanel.AlignBottomWithPanel="True"
+                   RelativePanel.Below="gridTitle">
+                <!-- Title -->
+                <!--<Pivot.Title>
+                    <RelativePanel>
+                        -->
+                <!--<TextBlock x:Name="tblSettingsTitleLogo"
+                                   FontFamily="Segoe MDL2 Assets"
+                                   Text="&#xE115;"
+                                   FontWeight="Normal"
+                                   RelativePanel.AlignVerticalCenterWithPanel="True"/>-->
+                <!--
+                        <TextBlock x:Name="tblSettingsTitleText"
+                                   Text="Settings"
+                                   FontWeight="Light"
+                                   FontSize="15"
+                                   RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                    </RelativePanel>
+                </Pivot.Title>-->
+
+
+                <!-- Settings -->
+                <!--<PivotItem Margin="0">
+                    <PivotItem.Header>
+                        <RelativePanel>
+                            <TextBlock x:Name="tblSettingsHeaderSettingsLogo"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       Text="&#xE115;"
+                                       FontWeight="Normal"
+                                       RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                            <TextBlock x:Name="tblSettingsHeaderSettingsText"
+                                       x:Uid="Settings-NewTabTitle"
+                                       Text="Settings"
+                                       FontWeight="Medium"
+                                       FontSize="16"
+                                       Margin="8,0"
+                                       RelativePanel.AlignVerticalCenterWithPanel="True"
+                                       RelativePanel.RightOf="tblSettingsHeaderSettingsLogo"/>
+                        </RelativePanel>
+                    </PivotItem.Header>
+                    
+                    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                          BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
+                          BorderThickness="0,2,0,0">
+
+                        
+                        
+                    </Grid>
+                </PivotItem>-->
+
+
+                <!-- About & Feedback -->
+                <PivotItem Margin="0">
+                    <PivotItem.Header>
+                        <RelativePanel>
+                            <TextBlock x:Name="tblSettingsHeaderAboutLogo"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       Text="&#xE946;"                                       
+                                       RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                            <TextBlock x:Name="tblSettingsHeaderAboutText"
+                                       Text="About"
+                                       FontWeight="Medium"
+                                       FontSize="16"
+                                       Margin="8,0"
+                                       RelativePanel.AlignVerticalCenterWithPanel="True"
+                                       RelativePanel.RightOf="tblSettingsHeaderAboutLogo"/>
+                        </RelativePanel>
+                    </PivotItem.Header>
+                    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                          BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
+                          BorderThickness="0,2,0,0">
+                        <RelativePanel Margin="8">
+                            <!-- About -->
+                            <StackPanel x:Name="gridAboutInfo"
+                                        Orientation="Vertical"
+                                        Margin="0,0,0,8"
+                                        RelativePanel.AlignLeftWithPanel="True"
+                                        RelativePanel.AlignRightWithPanel="True">
+                                <!--<TextBlock x:Uid="AB-About" 
+                                            Text="About"
+                                            FontSize="24" 
+                                            Margin="0,0,0,4"
+                                            FontWeight="Medium" />-->
+                                <TextBlock x:Name="appName"                                            
+                                           Text="GasTrack"
+                                           Style="{ThemeResource HeaderTextBlockStyle}" />
+                                <TextBlock x:Name="appVersion"
+                                           Text="Preview version" 
+                                           FontSize="14"
+                                           Margin="0,8,0,0"/>
+                                <TextBlock                                     
+                                           Text="Copyright Ikarago 2016"  
+                                           FontSize="14"/>
+                                <TextBlock 
+                                           Text="All rights reserved"
+                                           FontSize="14"/>
+                            </StackPanel>
+
+                            <!-- Translations --><!--
+                            <StackPanel x:Name="gridAboutTranslations"
+                                        Orientation="Vertical"
+                                        Margin="0,8"
+                                        RelativePanel.AlignLeftWithPanel="True"
+                                        RelativePanel.AlignRightWithPanel="True"
+                                        RelativePanel.Below="gridAboutInfo">
+                                <TextBlock x:Uid="Settings-About-Translations-Title"                                            
+                                           Text="Translations"
+                                           FontWeight="Light"
+                                           FontSize="34" />
+                                <TextBlock x:Uid="Settings-About-Translations-Intro" 
+                                           Text="These are the awesome people that helped translating the app:" 
+                                           TextWrapping="Wrap"
+                                           FontSize="14"
+                                           Margin="0,8"/>
+                                <TextBlock x:Uid="Settings-About-Translations-Translators" 
+                                           Text="English by Rick Drijvers
+                                                 Dutch by Rick Drijvers" 
+                                           TextWrapping="Wrap"
+                                           FontSize="14"
+                                           Margin="0,8"/>
+                                <Button x:Name="btnHelpTranslate"
+                                        x:Uid="Settings-About-Translations-HelpButton"
+                                        Style="{StaticResource TextBlockButtonStyle}"
+                                        Padding="0,4"
+                                        Content="Help translating the app!"
+                                        Click="btnSendEmail_Click" />
+                            </StackPanel>-->
+
+                            <!-- Changelog -->
+                            <StackPanel x:Name="gridAboutChangelog"
+                                        Orientation="Vertical"
+                                        Margin="0,16"
+                                        RelativePanel.AlignLeftWithPanel="True"
+                                        RelativePanel.AlignRightWithPanel="True"
+                                        RelativePanel.Below="gridAboutInfo">
+                                <TextBlock                                           
+                                           Text="What's new?"
+                                           Style="{ThemeResource TitleTextBlockStyle}" />
+                                <Button x:Name="btnOpenChangelog"
+                                        Style="{ThemeResource TextBlockButtonStyle}"
+                                        Padding="0,4"
+                                        Content="To changelog"
+                                        Click="btnOpenChangelog_Click" />
+                            </StackPanel>
+                        </RelativePanel>
+                    </Grid>
+                </PivotItem>
+
+
+                <!-- What's new -->
+                <!--<PivotItem Margin="0">
+                    <PivotItem.Header>
+                        <RelativePanel>
+                            <TextBlock x:Name="tblSettingsHeaderNewLogo"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       Text="&#xE930;"
+                                       FontWeight="Normal"
+                                       RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                            <TextBlock x:Name="tblSettingsHeaderNewText"
+                                       x:Uid="Settings-NewTabTitle"
+                                       Text="What's new?"
+                                       FontWeight="Medium"
+                                       FontSize="16"
+                                       Margin="8,0"
+                                       RelativePanel.AlignVerticalCenterWithPanel="True"
+                                       RelativePanel.RightOf="tblSettingsHeaderNewLogo"/>
+                        </RelativePanel>
+                    </PivotItem.Header>
+
+                    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                          BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
+                          BorderThickness="0,2,0,0">
+                        <RelativePanel Margin="8">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock x:Uid="Settings-NewChangelogTitle"                                            
+                                           Text="Changelog"
+                                           FontWeight="Light"
+                                           FontSize="32" />
+                                <TextBlock x:Name="tblNewChangelog"
+                                           x:Uid="Settings-NewChangelog"
+                                           Margin="0,4,0,0"
+                                           FontSize="14"
+                                           TextWrapping="Wrap"
+                                           Text="Well, lot's of stuff!
+                                           - Like this
+                                           - And this" />
+                            </StackPanel>
+                        </RelativePanel>
+
+                    </Grid>
+                </PivotItem>-->
+
+                <!-- Feedback -->
+                <PivotItem Margin="0">
+                    <PivotItem.Header>
+                        <RelativePanel>
+                            <TextBlock x:Name="tblSettingsHeaderFeedbackLogo"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       Text="&#xE8F2;"
+                                       FontWeight="Medium"
+                                       RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                            <TextBlock x:Name="tblSettingsHeaderFeedbackText"
+                                       x:Uid="Settings-FeedbackTabTitle"
+                                       Text="Feedback"
+                                       FontWeight="Medium"
+                                       FontSize="16"
+                                       Margin="8,0"
+                                       RelativePanel.AlignVerticalCenterWithPanel="True"
+                                       RelativePanel.RightOf="tblSettingsHeaderFeedbackLogo"/>
+                        </RelativePanel>
+                    </PivotItem.Header>
+
+
+                    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                          BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
+                          BorderThickness="0,2,0,0">
+                        <RelativePanel HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch"
+                                       Padding="8">
+                            <!-- Feedback - Intro -->
+                            <StackPanel x:Name="gridFeedbackIntro"
+                                        Orientation="Vertical"
+                                        RelativePanel.AlignTopWithPanel="True">
+                                <TextBlock 
+                                           FontSize="14"
+                                           TextWrapping="Wrap"
+                                           Text="Our mission is to make you smile and have fun using your device for everyday tasks. Let us know how we can make you have even more fun!" />
+                            </StackPanel>
+
+                            <!-- Feedback - Rate -->
+                            <StackPanel x:Name="gridFeedback"
+                                        Visibility="Visible"
+                                        Orientation="Vertical"
+                                        Margin="0,12"
+                                        RelativePanel.Below="gridFeedbackIntro">
+                                <TextBlock                                          
+                                           Text="Send us a smile..."
+                                           Style="{ThemeResource TitleTextBlockStyle}"
+                                           Margin="0,0,0,8"/>
+                                <Button x:Name="btnStoreReview"
+                                        
+                                        Style="{ThemeResource TextBlockButtonStyle}"
+                                        Content="... by rating us"
+                                        Padding="0,4"
+                                        Visibility="Visible"
+                                        Click="btnStoreReview_Click" />
+                                <Button x:Name="btnLaunchFeedbackHub"
+                                        
+                                        Style="{ThemeResource TextBlockButtonStyle}"
+                                        Content="... in the Feedback Hub" 
+                                        Padding="0,4"
+                                        Visibility="Collapsed"  
+                                        Click="btnLaunchFeedbackHub_Click"/>
+                                <Button x:Name="btnSendEmail"
+                                        
+                                        Style="{ThemeResource TextBlockButtonStyle}"
+                                        Padding="0,4"
+                                        Content="... by sending a mail"
+                                        Click="btnSendEmail_Click" />
+                            </StackPanel>
+
+                            <!-- Feedback - Follow -->
+                            <StackPanel x:Name="gridFollow"
+                                        Visibility="Visible"
+                                        Orientation="Vertical"
+                                        Margin="0,12"
+                                        RelativePanel.Below="gridFeedback">
+                                <TextBlock                                            
+                                           Text="Follow us..."
+                                           Style="{ThemeResource TitleTextBlockStyle}"
+                                           Margin="0,0,0,8"/>
+                                <Button x:Name="btnTwitter"
+                                        
+                                        Style="{ThemeResource TextBlockButtonStyle}"
+                                        Content="... on Twitter"
+                                        Padding="0,4"
+                                        Visibility="Visible"
+                                        Click="btnTwitter_Click"/>
+                                <Button x:Name="btnTumblr"
+                                        
+                                        Style="{ThemeResource TextBlockButtonStyle}"
+                                        Content="... on our blog"
+                                        Padding="0,4"
+                                        Visibility="Visible"
+                                        Click="btnTumblr_Click"/>
+                            </StackPanel>
+                        </RelativePanel>
+                    </Grid>
+                </PivotItem>
+
+
+                <!-- Donate -->
+                <!--<PivotItem x:Name="pivItemDonation"
+                           Visibility="Visible"
+                           Margin="0">
+                    <PivotItem.Header>
+                        <RelativePanel>
+                            <TextBlock x:Name="tblSettingsHeaderDonationLogo"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       Text="&#xE19F;"                                       
+                                       RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                            <TextBlock x:Name="tblSettingsHeaderDonationText"
+                                       x:Uid="Settings-DonationTabTitle"
+                                       Text="Support us!"
+                                       FontWeight="Medium"
+                                       FontSize="16"
+                                       Margin="8,0"
+                                       RelativePanel.AlignVerticalCenterWithPanel="True"
+                                       RelativePanel.RightOf="tblSettingsHeaderDonationLogo"/>
+                        </RelativePanel>
+                    </PivotItem.Header>
+                    <Grid BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
+                          BorderThickness="0,2,0,0">
+                        <RelativePanel>
+                            <ProgressRing x:Name="pgrDonation"
+                                          Height="96"
+                                          Width="96"
+                                          Visibility="Visible"
+                                          RelativePanel.AlignHorizontalCenterWithPanel="True"
+                                          RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                            --><!-- Thank you-page --><!--
+                            <RelativePanel x:Name="gridDonationThankYou"
+                                           Visibility="Collapsed">
+                                <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                              RelativePanel.AlignLeftWithPanel="True"
+                                              RelativePanel.AlignRightWithPanel="True"
+                                              RelativePanel.AlignTopWithPanel="True"
+                                              RelativePanel.AlignBottomWithPanel="True">
+                                    <StackPanel Orientation="Vertical"
+                                                HorizontalAlignment="Stretch"
+                                                Margin="8">
+                                        <TextBlock x:Uid="Settings-Donation-ThankYou-Title"                                            
+                                                   Text="Thank you!"
+                                                   Style="{ThemeResource TitleTextBlockStyle}"
+                                                   Margin="0,0,0,8"/>
+                                        <TextBlock x:Uid="Settings-Donation-ThankYou-Intro"
+                                                   Text="Thank you for your kind donation! :)
+                                               
+                                                         These are the exclusive features for you in this version:"
+                                                   TextWrapping="Wrap"
+                                                   FontSize="14"
+                                                   Margin="0,0,0,8"/>
+                                        <TextBlock x:Uid="Settings-Donation-Donate-Exclusive"
+                                                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                                   Text="- Pannekoeken
+                                                         - Pannekoeken
+                                                         - Pannekoeken"
+                                                   TextWrapping="Wrap"
+                                                   FontSize="14"
+                                                   Margin="0,0,0,8" />
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </RelativePanel>
+
+                            --><!-- Donation-page --><!--
+                            <RelativePanel x:Name="gridDonationDonate"
+                                           Visibility="Visible"
+                                           RelativePanel.AlignLeftWithPanel="True"
+                                           RelativePanel.AlignRightWithPanel="True"
+                                           RelativePanel.AlignTopWithPanel="True"
+                                           RelativePanel.AlignBottomWithPanel="True">
+                                <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                              RelativePanel.AlignLeftWithPanel="True"
+                                              RelativePanel.AlignRightWithPanel="True"
+                                              RelativePanel.AlignTopWithPanel="True"
+                                              RelativePanel.AlignBottomWithPanel="True">
+                                    <StackPanel Orientation="Vertical"
+                                                Margin="8"
+                                                HorizontalAlignment="Stretch">
+                                        <TextBlock x:Uid="Settings-Donation-Donate-Title"                                            
+                                                   Text="Donate"
+                                                   Style="{ThemeResource TitleTextBlockStyle}"
+                                                   Margin="0,0,0,8"/>
+                                        <TextBlock x:Uid="Settings-Donation-Donate-Intro"
+                                                   Text="Building awesome apps cost love, time and money. We worked hard to make the app free to use for everyone, so if you wish to reward those efforts you can buy a donation down below.
+                                                         As a token of thanks you'll get early access to new features. These are the features at this moment:"
+                                                   TextWrapping="Wrap"
+                                                   FontSize="14"
+                                                   Margin="0,0,0,8"/>
+                                        <TextBlock x:Uid="Settings-Donation-Donate-Exclusive"
+                                                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                                   Text="- Pannekoeken
+                                                         - Pannekoeken
+                                                         - Pannekoeken"
+                                                   TextWrapping="Wrap"
+                                                   FontSize="14"
+                                                   Margin="0,8,0,16" />
+                                        <TextBlock x:Uid="Settings-Donation-Donate-IntroContinued"
+                                                   Text=""
+                                                   Visibility="Collapsed"
+                                                   TextWrapping="Wrap"
+                                                   FontSize="14"
+                                                   Margin="0,0,0,8"/>
+                                        <StackPanel x:Name="stackTiers"
+                                                    Orientation="Horizontal"
+                                                    Margin="0,16"
+                                                    HorizontalAlignment="Center">
+                                            <Button x:Name="btnDonationT1"
+                                                    Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                                                    RequestedTheme="Dark"
+                                                    Content="Tier 1"
+                                                    Click="btnDonationT1_Click" />
+                                            <Button x:Name="btnDonationT2"
+                                                    Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                                                    RequestedTheme="Dark"
+                                                    Content="Tier 2"
+                                                    Margin="8,0"
+                                                    Click="btnDonationT2_Click" />
+                                            <Button x:Name="btnDonationT3"
+                                                    Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                                                    RequestedTheme="Dark"
+                                                    Content="Tier 3"
+                                                    Click="btnDonationT3_Click"/>
+                                        </StackPanel>
+                                        <TextBlock x:Name="tblTiersNotAvailable"
+                                                   x:Uid="Settings-Donation-Donate-NotAvailable"
+                                                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                                   Margin="0,16"
+                                                   Visibility="Collapsed"
+                                                   HorizontalAlignment="Center"
+                                                   Text="Donations are not available at this moment"/>
+                                        <TextBlock x:Uid="Settings-Donation-Donate-IntroContinued2"
+                                                   Text="If you don't wish to donate but still want to say thanks or send in a new feature, you can always send us a message via the 'Feedback'-tab here in the settings. :)
+                                                         Happy Snipping!"
+                                                   TextWrapping="Wrap"
+                                                   FontSize="14"
+                                                   Margin="0,8"/>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </RelativePanel>
+
+                        </RelativePanel>
+                    </Grid>
+                </PivotItem>-->
+
+
+
+
+            </Pivot>
+
+        </RelativePanel>
+    </Grid>
+</Page>

@@ -1,0 +1,462 @@
+﻿<Page
+    x:Class="GasTrack.View.CarSummaryPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GasTrack.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="using:GasTrack.ViewModel"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:DataType="viewModels:TripViewModel" 
+                      x:Key="tripTemplate">
+            <RelativePanel BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}"
+                           BorderThickness="0,0,0,1"
+                           RelativePanel.AlignLeftWithPanel="True"
+                           RelativePanel.AlignRightWithPanel="True">
+                <!-- Distance -->
+                <RelativePanel x:Name="rpTripDistance"
+                               RelativePanel.AlignVerticalCenterWithPanel="True"
+                               RelativePanel.AlignLeftWithPanel="True">
+                    <TextBlock x:Name="tblTripDistance"
+                               Text="{x:Bind TripDistance, Mode=OneWay, FallbackValue='tripdis'}"
+                               FontSize="24"
+                               FontWeight="SemiBold"
+                               Margin="8,0,4,0"
+                               RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                    <TextBlock x:Name="tblTripDistanceUnits"
+                               Text="km"
+                               FontSize="24"
+                               FontWeight="Light"
+                               Margin="0,0,8,0"
+                               RelativePanel.RightOf="tblTripDistance"/>
+                    <StackPanel x:Name="spTripDistanceCounters"
+                                Visibility="Collapsed"
+                                Orientation="Vertical"
+                                Margin="8,0"
+                                RelativePanel.AlignVerticalCenterWithPanel="True"
+                                RelativePanel.RightOf="tblTripDistance">
+                        <TextBlock x:Name="tblTripCounterStart"
+                                   Text="{x:Bind CounterStart, Mode=OneWay, FallbackValue='start'}" 
+                                   HorizontalAlignment="Center"/>
+                        <MenuFlyoutSeparator Padding="0,2,0,0" />
+                        <TextBlock x:Name="tblTripCounterEnd"
+                                   Text="{x:Bind CounterEnd, Mode=OneWay, FallbackValue='end'}"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </RelativePanel>
+
+                <!-- Seperator -->
+                <AppBarSeparator x:Name="sepTrip"
+                                 RelativePanel.AlignVerticalCenterWithPanel="True"
+                                 RelativePanel.RightOf="rpTripDistance"
+                                 RelativePanel.LeftOf="spTripCost"/>
+
+
+                <!-- Cost -->
+                <StackPanel x:Name="spTripCost"
+                            Orientation="Horizontal"
+                            Margin="8,0,4,0"
+                            RelativePanel.LeftOf="sepButton">
+                    <TextBlock x:Name="tblTripCostUnits"
+                               Text="€"
+                               FontSize="24"
+                               FontWeight="SemiLight"/>
+                    <TextBlock x:Name="tblTripCost"
+                               Text="{x:Bind TripCost, Mode=OneWay, FallbackValue='tripcost'}"
+                               FontWeight="SemiBold"
+                               FontSize="24"
+                               Margin="4,0,0,0"/>
+                </StackPanel>
+
+                <!-- Date -->
+                <TextBlock x:Name="tblTripDate"
+                           Text="{x:Bind TripDateString, Mode=OneWay, FallbackValue='date'}"
+                           FontSize="12"
+                           Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                           Margin="8,0,4,0"
+                           RelativePanel.LeftOf="sepButton"
+                           RelativePanel.Below="spTripCost"/>
+
+                <AppBarSeparator x:Name="sepButton"
+                                 RelativePanel.AlignVerticalCenterWithPanel="True"
+                                 RelativePanel.LeftOf="tblTripTripOpen"/>
+                <TextBlock x:Name="tblTripTripOpen"
+                           Text="&#xE00F;"
+                           FontFamily="Segoe MDL2 Assets"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           RelativePanel.AlignRightWithPanel="True"/>
+
+            </RelativePanel>
+        </DataTemplate>
+    </Page.Resources>
+    
+    
+    
+    
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="MasterColumn" Width="*" />
+            <ColumnDefinition x:Name="BonusColumn" Width="0" />
+        </Grid.ColumnDefinitions>
+
+
+
+        <!-- Master Content -->
+        <RelativePanel x:Name="rpMaster"
+                       Grid.Column="0">
+            <!-- Titlebar -->
+            <RelativePanel x:Name="rpTitle"
+                           Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                           BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
+                           BorderThickness="0,0,0,0"
+                           Height="48"
+                           RelativePanel.AlignLeftWithPanel="True"
+                           RelativePanel.AlignRightWithPanel="True"
+                           RelativePanel.AlignTopWithPanel="True">
+                <TextBlock x:Name="tblTitleLogo"
+                           FontFamily="Segoe MDL2 Assets"
+                           Text="&#xE7EC;"
+                           FontWeight="Light"
+                           Margin="12,8"
+                           FontSize="22"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           RelativePanel.AlignLeftWithPanel="True"/>
+                <TextBlock x:Name="tblTitleText"
+                           x:Uid="Settings-Title"
+                           Text="{x:Bind selectedCar.CarName}"
+                           Margin="0,8"
+                           FontWeight="SemiLight"
+                           FontSize="22"
+                           RelativePanel.RightOf="tblTitleLogo"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"/>
+            </RelativePanel>
+
+
+            <!-- Content -->
+            <RelativePanel x:Name="rpContent"
+                           BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
+                           BorderThickness="0,0,0,2"
+                           RelativePanel.AlignLeftWithPanel="True"
+                           RelativePanel.AlignRightWithPanel="True"
+                           RelativePanel.Below="rpTitle"
+                           RelativePanel.Above="cbarBottom">
+                <!-- Messages -->
+                <RelativePanel x:Name="rpMessages"
+                               RelativePanel.AlignLeftWithPanel="True"
+                               RelativePanel.AlignRightWithPanel="True">
+                    <!-- Top Message -->
+                    <RelativePanel x:Name="rpTopMessage"
+                                   RelativePanel.AlignLeftWithPanel="True"
+                                   RelativePanel.AlignRightWithPanel="True"
+                                   RelativePanel.AlignTopWithPanel="True">
+
+                        <!-- Totals (Big) -->
+                        <RelativePanel x:Name="rpTopMessageTotalsBig"
+                                       Visibility="Visible"
+                                       Height="120"
+                                       BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
+                                       BorderThickness="0,0,0,2"
+                                       RelativePanel.AlignLeftWithPanel="True"
+                                       RelativePanel.AlignRightWithPanel="True">
+                            <RelativePanel RelativePanel.AlignLeftWithPanel="True"
+                                           RelativePanel.AlignRightWithPanel="True"
+                                           RelativePanel.AlignVerticalCenterWithPanel="True">
+                                <TextBlock x:Name="tblBMTotalsTotals"
+                                           Text="Totals:"
+                                           FontSize="34"
+                                           FontWeight="Normal"
+                                           Margin="8,0"
+                                           RelativePanel.AlignTopWithPanel="True"
+                                           RelativePanel.AlignLeftWithPanel="True"/>
+                                <RelativePanel x:Name="gridBigMessageTotalsDisCost"
+                                               RelativePanel.Below="tblBMTotalsTotals"
+                                               RelativePanel.AlignLeftWithPanel="True"
+                                               RelativePanel.AlignRightWithPanel="True">
+                                    <StackPanel x:Name="stackBMDistance"
+                                                Orientation="Horizontal"
+                                                Margin="8,0"
+                                                RelativePanel.AlignVerticalCenterWithPanel="True"
+                                                RelativePanel.AlignLeftWithPanel="True">
+                                        <!-- Distance -->
+                                        <TextBlock x:Name="tblBMTotalsDistance"
+                                                   Text="{x:Bind tripManager.TotalDistance, Mode=OneWay, FallbackValue='totdis'}"
+                                                   FontSize="34"
+                                                   FontWeight="Light"
+                                                   Foreground="{ThemeResource SystemControlForegroundAccentBrush}" >
+                                            <TextBlock.Transitions>
+                                                <TransitionCollection>
+                                                    <ContentThemeTransition/>
+                                                </TransitionCollection>
+                                            </TextBlock.Transitions>
+                                        </TextBlock>
+                                        <TextBlock x:Name="tblBMTotalsDistanceUnits"
+                                                   Text="km"
+                                                   FontSize="34"
+                                                   FontWeight="Light"
+                                                   Margin="4,0,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel x:Name="stackBMCost"
+                                                Orientation="Horizontal"
+                                                RelativePanel.AlignRightWithPanel="True">
+                                        <!-- Cost -->
+                                        <TextBlock x:Name="tblBMTotalsCostUnits"
+                                                   Text="€"
+                                                   FontSize="34"
+                                                   FontWeight="Light"
+                                                   Margin="24,0,0,0"/>
+                                        <TextBlock x:Name="tblBMTotalsCost"
+                                                   Text="{x:Bind tripManager.TotalCost, Mode=OneWay, FallbackValue='totcost'}"
+                                                   FontSize="34"
+                                                   FontWeight="Light"
+                                                   Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
+                                                   Margin="4,0,8,0">
+                                            <TextBlock.Transitions>
+                                                <TransitionCollection>
+                                                    <ContentThemeTransition/>
+                                                </TransitionCollection>
+                                            </TextBlock.Transitions>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </RelativePanel>
+                            </RelativePanel>
+                        </RelativePanel>
+                        <!-- END OF Totals (Big) -->
+
+
+                        <!-- Totals (Small) -->
+                        <RelativePanel x:Name="rpTopMessageTotalsSmall"
+                                       Visibility="Collapsed"
+                                       Height="48"
+                                       BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
+                                       BorderThickness="0,0,0,2"
+                                       RelativePanel.AlignLeftWithPanel="True"
+                                       RelativePanel.AlignRightWithPanel="True">
+                            <TextBlock x:Name="tblSMTotalsTotals"
+                                       Text="Current totals:"
+                                       FontWeight="SemiBold"
+                                       Margin="8,0"
+                                       RelativePanel.AlignVerticalCenterWithPanel="True"
+                                       RelativePanel.AlignLeftWithPanel="True"/>
+
+                            <StackPanel Orientation="Horizontal"
+                                        RelativePanel.AlignVerticalCenterWithPanel="True"
+                                        RelativePanel.AlignRightWithPanel="True">
+                                <!-- Distance -->
+                                <TextBlock x:Name="tblSMTotalsDistance"
+                                           Text="{x:Bind tripManager.TotalDistance, Mode=OneWay, FallbackValue='cgtotdis'}"
+                                           FontWeight="SemiBold"
+                                           Foreground="{ThemeResource SystemControlForegroundAccentBrush}" />
+                                <TextBlock x:Name="tblSMTotalsDistanceUnits"
+                                           Text="km"
+                                           Margin="4,0,0,0"/>
+
+                                <!-- Cost -->
+                                <TextBlock x:Name="tblSMTotalsCostUnits"
+                                           Text="€"
+                                           Margin="24,0,0,0"/>
+                                <TextBlock x:Name="tblSMTotalsCost"
+                                           Text="{x:Bind tripManager.TotalCost, Mode=OneWay, FallbackValue='totcost'}"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource SystemControlForegroundAccentBrush}"
+                                           Margin="4,0,8,0"/>
+                            </StackPanel>
+                        </RelativePanel>
+                        <!-- END OF Totals (Small) -->
+
+                    </RelativePanel>
+                    <!-- END OF Big Message -->
+
+
+
+                    <!-- Small Message -->
+                    <RelativePanel x:Name="rpBottomMessage"
+                                   RelativePanel.AlignLeftWithPanel="True"
+                                   RelativePanel.AlignRightWithPanel="True"
+                                   RelativePanel.Below="rpTopMessage">
+
+                        <!-- Finish trip -->
+                        <RelativePanel x:Name="rpBottomMessageFinishTrip"
+                                       Visibility="Collapsed"
+                                       Height="120"
+                                       RelativePanel.AlignLeftWithPanel="True"
+                                       RelativePanel.AlignRightWithPanel="True">
+                            <Button x:Name="btnFinishTrip"
+                                    Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                                    RelativePanel.AlignLeftWithPanel="True"
+                                    RelativePanel.AlignRightWithPanel="True"
+                                    RelativePanel.AlignTopWithPanel="True"
+                                    RelativePanel.AlignBottomWithPanel="True" 
+                                    HorizontalAlignment="Stretch" 
+                                    VerticalAlignment="Stretch"
+                                    Click="btnFinishTrip_Click">
+                                <Button.Content>
+                                    <RelativePanel>
+                                        <TextBlock x:Name="tblFinishTripIcon"
+                                                   Text="&#xE129;"
+                                                   RequestedTheme="Dark"
+                                                   FontFamily="Segoe MDL2 Assets"
+                                                   FontSize="24"
+                                                   FontWeight="SemiLight"
+                                                   Margin="8"
+                                                   RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                                        <TextBlock x:Name="tblFinishTripText"
+                                                   Text="Finish trip"
+                                                   FontSize="24"
+                                                   FontWeight="SemiLight"
+                                                   RequestedTheme="Dark"
+                                                   RelativePanel.AlignVerticalCenterWithPanel="True"
+                                                   RelativePanel.RightOf="tblFinishTripIcon"/>
+                                    </RelativePanel>
+                                </Button.Content>
+                            </Button>
+                        </RelativePanel>
+                        <!-- END OF Finish Trip -->
+                        
+                        <!-- Start trip -->
+                        <RelativePanel x:Name="rpBottomMessageStartTrip"
+                                       Visibility="Visible"
+                                       Height="48"
+                                       RelativePanel.AlignLeftWithPanel="True"
+                                       RelativePanel.AlignRightWithPanel="True">
+                            <Button x:Name="btnStartTrip"
+                                    Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                                    RelativePanel.AlignLeftWithPanel="True"
+                                    RelativePanel.AlignRightWithPanel="True"
+                                    RelativePanel.AlignTopWithPanel="True"
+                                    RelativePanel.AlignBottomWithPanel="True" 
+                                    HorizontalAlignment="Stretch" 
+                                    VerticalAlignment="Stretch"
+                                    Click="btnStartTrip_Click">
+                                <Button.Content>
+                                    <RelativePanel>
+                                        <TextBlock x:Name="tblStartTripIcon"
+                                                   Text="&#xE109;"
+                                                   RequestedTheme="Dark"
+                                                   FontFamily="Segoe MDL2 Assets"
+                                                   FontSize="20"
+                                                   Margin="8"
+                                                   RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                                        <TextBlock x:Name="tblStartTripText"
+                                                   Text="Start a new trip"
+                                                   FontSize="20"
+                                                   RequestedTheme="Dark"
+                                                   RelativePanel.AlignVerticalCenterWithPanel="True"
+                                                   RelativePanel.RightOf="tblStartTripIcon"/>
+                                    </RelativePanel>
+                                </Button.Content>
+                            </Button>
+                        </RelativePanel>
+                        <!-- END OF Start Trip -->
+                    </RelativePanel>
+                    <!-- END OF Small Message -->
+
+
+                    <!-- Arrow? -->
+                    <RelativePanel x:Name="gridToSubContent"
+                                   Visibility="Collapsed"
+                                   Height="16"
+                                   RelativePanel.AlignLeftWithPanel="True"
+                                   RelativePanel.AlignRightWithPanel="True"
+                                   RelativePanel.Below="rpBottomMessage">
+                        <Button x:Name="btnToSubContent"
+                                Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                                Padding="0"
+                                RelativePanel.AlignLeftWithPanel="True"
+                                RelativePanel.AlignRightWithPanel="True"
+                                RelativePanel.AlignTopWithPanel="True"
+                                RelativePanel.AlignBottomWithPanel="True" 
+                                HorizontalAlignment="Stretch" 
+                                VerticalAlignment="Stretch">
+                            <Button.Content>
+                                <TextBlock Text="&#xE099;"
+                                           RequestedTheme="Dark"
+                                           FontFamily="Segoe MDL2 Assets"
+                                           FontSize="12"/>
+                            </Button.Content>
+                        </Button>
+                    </RelativePanel>
+                </RelativePanel>
+
+
+
+
+                <!-- ListView -->
+                <ListView x:Name="lvTrips"
+                          ItemsSource="{x:Bind tripManager.Trips, Mode=OneWay}"
+                          SelectedIndex="{x:Bind tripManager.SelectedIndex, Mode=TwoWay}"
+                          ItemTemplate="{StaticResource tripTemplate}"
+                          Padding="0,4,0,0"
+                          RelativePanel.AlignLeftWithPanel="True"
+                          RelativePanel.AlignRightWithPanel="True"
+                          RelativePanel.AlignBottomWithPanel="True"
+                          RelativePanel.Below="rpMessages" 
+                          SelectionMode="Single"
+                          SelectionChanged="lvTrips_SelectionChanged">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+
+            </RelativePanel>
+            <!-- END OF Master - Content -->
+
+            <!-- Command Bar -->
+            <CommandBar x:Name="cbarBottom"
+                        RelativePanel.AlignLeftWithPanel="True"
+                        RelativePanel.AlignRightWithPanel="True"
+                        RelativePanel.AlignBottomWithPanel="True">
+                <CommandBar.PrimaryCommands>
+                    <AppBarButton x:Name="cbtnGarage"
+                                   Icon="Home"
+                                   Label="To Garage"
+                                   Click="cbtnGarage_Click" />
+                    <!-- Change cost -->
+                    <AppBarButton x:Name="cbtnSettings"
+                                  Icon="Setting"
+                                  Label="Settings"
+                                  Click="cbtnSettings_Click"/>
+                    <!--<AppBarButton x:Name="cbtnDeleteTrip"
+                                  Icon="Delete"
+                                  Label="Delete Trip"
+                                  Click="cbtnDeleteTrip_Click" />-->
+
+
+                </CommandBar.PrimaryCommands>
+                <CommandBar.SecondaryCommands>
+                    <!-- Clear List -->
+                    <AppBarButton x:Name="cbtnClearList"
+                                  Icon="Delete"
+                                  Label="Clear List"
+                                  Click="cbtnClearList_Click"/>
+
+
+                </CommandBar.SecondaryCommands>
+
+
+
+
+
+            </CommandBar>
+        </RelativePanel>
+
+        <!-- Bonus column (used for Continuum and such, so fill this fucker up with some nice graphics that make me smile :) -->
+        <RelativePanel x:Name="gridBonus"
+                       Grid.Column="1">
+            <!--<Image x:Name="imgBonusBackground"
+                   Source="ms-appx:///Assets/Background/tempBonusBackground.jpg"
+                   Stretch="UniformToFill" 
+                   RelativePanel.AlignLeftWithPanel="True"
+                   RelativePanel.AlignRightWithPanel="True"
+                   RelativePanel.AlignTopWithPanel="True"
+                   RelativePanel.AlignBottomWithPanel="True" />-->
+
+
+        </RelativePanel>
+    </Grid>
+</Page>

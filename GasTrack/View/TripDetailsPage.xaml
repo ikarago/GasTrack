@@ -1,0 +1,292 @@
+﻿<Page
+    x:Class="GasTrack.View.TripDetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GasTrack.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="using:GasTrack.ViewModel"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <RelativePanel x:Name="rpMaster">
+            <!-- Master - Titlebar -->
+            <RelativePanel x:Name="rpMasterTitlebar"
+                           Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                           Height="48"
+                           RelativePanel.AlignLeftWithPanel="True"
+                           RelativePanel.AlignRightWithPanel="True"
+                           RelativePanel.AlignTopWithPanel="True">
+                <TextBlock x:Name="tblTitlebarIcon"
+                           RequestedTheme="Dark"
+                           FontFamily="Segoe MDL2 Assets"
+                           Text="&#xEE92;"
+                           FontWeight="Light"
+                           Margin="12,0"
+                           FontSize="22"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           RelativePanel.AlignLeftWithPanel="True"/>
+                <TextBlock x:Name="tblTitlebarText"
+                           x:Uid="Settings-Title"
+                           RequestedTheme="Dark"
+                           Text="Trip on"
+                           FontWeight="SemiLight"
+                           FontSize="22"
+                           RelativePanel.RightOf="tblTitlebarIcon"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                <TextBlock x:Name="tblTitlebarTripDate"
+                           RequestedTheme="Dark"
+                           Margin="6,0"
+                           Text="{x:Bind TripManager.SelectedTrip.TripDateString, Mode=OneWay, FallbackValue='date'}" 
+                           FontWeight="Light"
+                           FontSize="22"
+                           RelativePanel.RightOf="tblTitlebarText"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"/>
+            </RelativePanel>
+            <!-- END OF Master- Titlebar -->
+
+
+
+            <!-- Master - Content -->
+            <RelativePanel x:Name="rpMasterContent"
+                           BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
+                           BorderThickness="0,0,0,2"
+                           RelativePanel.AlignLeftWithPanel="True"
+                           RelativePanel.AlignRightWithPanel="True"
+                           RelativePanel.Below="rpMasterTitlebar"
+                           RelativePanel.Above="cbarBottom">
+                <ListView HorizontalContentAlignment="Stretch"
+                          SelectionMode="None"
+                          RelativePanel.AlignLeftWithPanel="True"
+                          RelativePanel.AlignRightWithPanel="True">
+                    <!-- Name -->
+                    <ListViewItem HorizontalContentAlignment="Stretch">
+                        <RelativePanel x:Name="rpContentName"
+                                       BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
+                                       BorderThickness="0,0,0,1"
+                                       MinHeight="48"
+                                       RelativePanel.AlignLeftWithPanel="True"
+                                       RelativePanel.AlignRightWithPanel="True">
+                            <TextBlock x:Name="tblContentNameIcon"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       Text="&#xE104;"
+                                       FontWeight="Light"
+                                       Margin="8,0,16,0"
+                                       FontSize="22"
+                                       RelativePanel.AlignVerticalCenterWithPanel="True"
+                                       RelativePanel.AlignLeftWithPanel="True"/>
+                            <TextBlock x:Name="tblContentNameText"
+                                       x:Uid="Settings-Title"
+                                       Text="{x:Bind TripManager.SelectedTrip.TripName, Mode=OneWay, FallbackValue='trip name'}"
+                                       FontWeight="Light"
+                                       FontSize="22"
+                                       RelativePanel.RightOf="tblContentNameIcon"
+                                       RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                        </RelativePanel>
+                    </ListViewItem>
+
+                    <!-- Distance -->
+                    <ListViewItem HorizontalContentAlignment="Stretch">
+                        <RelativePanel x:Name="rpContentDistance"
+                                       BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
+                                       BorderThickness="0,0,0,1"
+                                       MinHeight="48"
+                                       RelativePanel.AlignLeftWithPanel="True"
+                                       RelativePanel.AlignRightWithPanel="True">
+                            <TextBlock x:Name="tblContentDistanceIcon"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       Text="&#xE174;"
+                                       FontWeight="Light"
+                                       Margin="8,0,16,0"
+                                       FontSize="22"
+                                       RelativePanel.AlignVerticalCenterWithPanel="True"
+                                       RelativePanel.AlignLeftWithPanel="True"/>
+                            <StackPanel x:Name="spContentDistanceDistance"
+                                        Orientation="Horizontal"
+                                        RelativePanel.RightOf="tblContentDistanceIcon"
+                                        RelativePanel.AlignVerticalCenterWithPanel="True">
+                                <TextBlock x:Name="tblContentDistanceText"
+                                           x:Uid="Settings-Title"
+                                           Text="{x:Bind TripManager.SelectedTrip.TripDistance, Mode=OneWay, FallbackValue='distance'}" 
+                                           FontWeight="Light"
+                                           FontSize="22" />
+                                <TextBlock x:Uid="Settings-Title"
+                                           Margin="6,0,0,0"
+                                           Text="km"
+                                           FontWeight="Light"
+                                           FontSize="22" />
+                            </StackPanel>
+                            
+                            <!-- Individual trips -->
+                            <StackPanel x:Name="spTripDistanceCounters"
+                                        Orientation="Vertical"
+                                        Margin="24,8"
+                                        RelativePanel.AlignVerticalCenterWithPanel="True"
+                                        RelativePanel.RightOf="spContentDistanceDistance">
+                                <TextBlock x:Name="tblTripCounterStart"
+                                           Text="{x:Bind TripManager.SelectedTrip.CounterStart, Mode=OneWay, FallbackValue='start'}" 
+                                           HorizontalAlignment="Center"
+                                           FontWeight="SemiLight"
+                                           FontSize="14"/>
+                                <MenuFlyoutSeparator Padding="0,4,0,0" />
+                                <TextBlock x:Name="tblTripCounterEnd"
+                                           Text="{x:Bind TripManager.SelectedTrip.CounterEnd, Mode=OneWay, FallbackValue='end'}"
+                                           HorizontalAlignment="Center"
+                                           FontWeight="SemiLight"
+                                           FontSize="14"/>
+                            </StackPanel>
+
+                        </RelativePanel>
+                    </ListViewItem>
+
+                    <!-- Cost -->
+                    <ListViewItem HorizontalContentAlignment="Stretch">
+                        <RelativePanel x:Name="rpContentCost"
+                                       BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
+                                       BorderThickness="0,0,0,1"
+                                       MinHeight="48"
+                                       RelativePanel.AlignLeftWithPanel="True"
+                                       RelativePanel.AlignRightWithPanel="True">
+                            <TextBlock x:Name="tblContentCostIcon"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       Text="&#xE1CB;"
+                                       FontWeight="Light"
+                                       Margin="8,0,16,0"
+                                       FontSize="22"
+                                       RelativePanel.AlignVerticalCenterWithPanel="True"
+                                       RelativePanel.AlignLeftWithPanel="True"/>
+                            <StackPanel Orientation="Horizontal"
+                                        RelativePanel.RightOf="tblContentCostIcon"
+                                        RelativePanel.AlignVerticalCenterWithPanel="True">
+                                <TextBlock x:Uid="Settings-Title"
+                                           Margin="0,0,6,0"
+                                           Text="€"
+                                           FontWeight="Light"
+                                           FontSize="22" />
+                                <TextBlock x:Name="tblContentCostText"
+                                           x:Uid="Settings-Title"
+                                           Text="{x:Bind TripManager.SelectedTrip.TripCost, Mode=OneWay, FallbackValue='cost'}"
+                                           FontWeight="Light"
+                                           FontSize="22"/>
+                            </StackPanel>
+                        </RelativePanel>
+                    </ListViewItem>
+
+
+                    <!-- Car -->
+                    <ListViewItem HorizontalContentAlignment="Stretch">
+                        <RelativePanel x:Name="rpContentCar"
+                                       BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
+                                       BorderThickness="0,0,0,0"
+                                       MinHeight="48"
+                                       RelativePanel.AlignLeftWithPanel="True"
+                                       RelativePanel.AlignRightWithPanel="True">
+                            <TextBlock x:Name="tblContentCarIcon"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       Text="&#xE7EC;"
+                                       FontWeight="Light"
+                                       Margin="8,0,16,0"
+                                       FontSize="22"
+                                       RelativePanel.AlignVerticalCenterWithPanel="True"
+                                       RelativePanel.AlignLeftWithPanel="True"/>
+                            <StackPanel Orientation="Vertical" 
+                                        Margin="0,8"
+                                        RelativePanel.RightOf="tblContentCarIcon"
+                                        RelativePanel.AlignVerticalCenterWithPanel="True">
+                                <TextBlock x:Name="tblContentCarCarName"
+                                           Text="{x:Bind CarManager.SelectedCar.CarName, Mode=OneWay, FallbackValue='carname'}"
+                                           FontWeight="Light"
+                                           FontSize="22"/>
+                                <TextBlock x:Name="tblContentCarLicense"
+                                           Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+                                           Text="{x:Bind CarManager.SelectedCar.LicensePlate, Mode=OneWay, FallbackValue='license'}"
+                                           FontWeight="SemiLight"
+                                           FontSize="14"/>
+                            </StackPanel>
+
+                        </RelativePanel>
+                    </ListViewItem>
+
+
+                    <!-- Photos -->
+                    <!--<ListViewItem HorizontalContentAlignment="Stretch">
+                        <RelativePanel x:Name="rpContentPhotos"
+                                       BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
+                                       BorderThickness="0,0,0,0"
+                                       MinHeight="128"
+                                       RelativePanel.AlignLeftWithPanel="True"
+                                       RelativePanel.AlignRightWithPanel="True">
+                            <TextBlock x:Name="tblContentPhotosIcon"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       Text="&#xE114;"
+                                       FontWeight="Light"
+                                       Margin="12,0"
+                                       FontSize="22"
+                                       RelativePanel.AlignVerticalCenterWithPanel="True"
+                                       RelativePanel.AlignLeftWithPanel="True"/>
+                            <ScrollViewer HorizontalScrollMode="Enabled"
+                                          VerticalScrollMode="Disabled"
+                                          RelativePanel.RightOf="tblContentPhotosIcon"
+                                          RelativePanel.AlignRightWithPanel="True">
+                                <RelativePanel>
+                                    <StackPanel x:Name="spContentPhotosStart"
+                                                Orientation="Vertical"
+                                                Margin="12">
+                                        <Image x:Name="imgContentPhotosStart"
+                                               Height="120"
+                                               Width="120" 
+                                               Source="ms-appx:///Assets/Dummy/OldIkaragoLogo.png"/>
+                                        <TextBlock Text="Start"
+                                                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel x:Name="spContentPhotosFinish"
+                                                Orientation="Vertical"
+                                                Margin="12"
+                                                RelativePanel.RightOf="spContentPhotosStart">
+                                        <Image x:Name="imgContentPhotosFinish"
+                                               Height="120"
+                                               Width="120" 
+                                               Source="ms-appx:///Assets/Dummy/OldIkaragoLogo.png"/>
+                                        <TextBlock Text="Finish"
+                                                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </RelativePanel>
+                            </ScrollViewer>
+
+                        </RelativePanel>
+                    </ListViewItem>-->
+
+
+
+                </ListView>
+
+            </RelativePanel>
+            <!-- END OF Master - Content -->
+
+
+
+            <!-- Master - Commandbar -->
+            <CommandBar x:Name="cbarBottom"
+                        RelativePanel.AlignLeftWithPanel="True"
+                        RelativePanel.AlignRightWithPanel="True"
+                        RelativePanel.AlignBottomWithPanel="True">
+                <CommandBar.PrimaryCommands>
+                    <!--<AppBarButton x:Name="cbtnExport"
+                                  Icon="Upload"
+                                  Label="Export" />-->
+                    <AppBarButton x:Name="cbtnEdit"
+                                  Icon="Edit"
+                                  Label="Edit"/>
+                </CommandBar.PrimaryCommands>
+
+
+            </CommandBar>
+            <!-- END OF Master - Commandbar -->
+
+        </RelativePanel>
+    </Grid>
+</Page>

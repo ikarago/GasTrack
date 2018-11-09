@@ -1,0 +1,156 @@
+﻿<Page
+    x:Class="GasTrack.View.GaragePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GasTrack.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="using:GasTrack.ViewModel"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:Key="carTemplate"
+                      x:DataType="viewModels:CarViewModel">
+            <RelativePanel BorderBrush="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
+                           BorderThickness="0,0,0,1"
+                           HorizontalAlignment="Stretch"
+                           Holding="rpCarItem_Holding"
+                           RightTapped="rpCarItem_RightTapped">
+                <StackPanel x:Name="spCarsCarInfo"
+                            Orientation="Vertical">
+                    <TextBlock Text="{x:Bind CarName, Mode=OneWay, FallbackValue='carname'}"
+                               Margin="0,4"
+                               Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,0,0,4">
+                        <TextBlock Text="{x:Bind CarOwner, Mode=OneWay, FallbackValue='owner'}"
+                                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                   Style="{ThemeResource BodyTextBlockStyle}"/>
+                        <TextBlock Text="-"
+                                   Margin="4,0"
+                                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                   Style="{ThemeResource BodyTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind LicensePlate, Mode=OneWay, FallbackValue='license'}"
+                                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                   Style="{ThemeResource BodyTextBlockStyle}"/>
+                    </StackPanel>
+
+
+                </StackPanel>
+                <!-- Seperator -->
+                <AppBarSeparator x:Name="sepTrip"
+                                 RelativePanel.AlignVerticalCenterWithPanel="True"
+                                 RelativePanel.LeftOf="tblCarsCarOpen"/>
+                <TextBlock x:Name="tblCarsCarOpen"
+                           Text="&#xE00F;"
+                           FontFamily="Segoe MDL2 Assets"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           RelativePanel.AlignRightWithPanel="True"/>
+
+                <FlyoutBase.AttachedFlyout>
+                    <MenuFlyout Placement="Bottom">
+                        <MenuFlyoutItem x:Name="fcbtnEditCar"
+                                        Text="Edit"
+                                        Click="fcbtnEditCar_Click" />
+                        <MenuFlyoutItem x:Name="fcbtnDeleteCar"
+                                        Text="Delete"
+                                        Click="fcbtnDeleteCar_Click"/>
+                    </MenuFlyout>
+                </FlyoutBase.AttachedFlyout>
+            </RelativePanel>
+
+        </DataTemplate>
+    </Page.Resources>
+    
+    
+    
+    
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <RelativePanel>
+            <!-- Titlebar -->
+            <RelativePanel x:Name="rpMasterTitlebar"
+                           Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                           BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
+                           BorderThickness="0,0,0,0"
+                           Height="48"
+                           RelativePanel.AlignLeftWithPanel="True"
+                           RelativePanel.AlignRightWithPanel="True"
+                           RelativePanel.AlignTopWithPanel="True">
+                <TextBlock x:Name="tblTitlebarLogo"
+                           RequestedTheme="Dark"
+                           FontFamily="Segoe MDL2 Assets"
+                           Text="&#xE10F;"
+                           FontWeight="Light"
+                           Margin="12,0"
+                           FontSize="22"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           RelativePanel.AlignLeftWithPanel="True"/>
+                <TextBlock x:Name="tblTitlebarText"
+                           x:Uid="Settings-Title"
+                           RequestedTheme="Dark"
+                           Text="Garage"
+                           FontWeight="SemiLight"
+                           FontSize="22"
+                           RelativePanel.RightOf="tblTitlebarLogo"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"/>
+            </RelativePanel>
+            <!-- END OF Master - Titlebar -->
+            
+            
+            <!-- Master - Content -->
+            <RelativePanel x:Name="rpMasterContent"
+                           BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
+                           BorderThickness="0,0,0,2"
+                           RelativePanel.AlignLeftWithPanel="True"
+                           RelativePanel.AlignRightWithPanel="True"
+                           RelativePanel.Below="rpMasterTitlebar"
+                           RelativePanel.Above="cbarMaster">
+                <ListView x:Name="lvCars"
+                          ItemsSource="{x:Bind carManager.Cars}"
+                          ItemTemplate="{StaticResource carTemplate}"
+                          IsItemClickEnabled="True" 
+                          SelectedIndex="{x:Bind carManager.SelectedIndex, Mode=TwoWay}"
+                          SelectionMode="Single"
+                          RelativePanel.AlignLeftWithPanel="True"
+                          RelativePanel.AlignRightWithPanel="True"
+                          RelativePanel.AlignTopWithPanel="True"
+                          RelativePanel.AlignBottomWithPanel="True"
+                          ItemClick="lvCars_ItemClick">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListViewItem>
+
+                    </ListViewItem>
+                </ListView>
+
+            </RelativePanel>
+            <!-- END OF Master - Content -->
+            
+            
+            <!-- Master - Commandbar -->
+            <CommandBar x:Name="cbarMaster"
+                        RelativePanel.AlignLeftWithPanel="True"
+                        RelativePanel.AlignRightWithPanel="True"
+                        RelativePanel.AlignBottomWithPanel="True">
+                <CommandBar.PrimaryCommands>
+                    <AppBarButton x:Name="cbtnAdd"
+                                  Icon="Add"
+                                  Label="Add car"
+                                  Click="cbtnAdd_Click" />
+                </CommandBar.PrimaryCommands>
+
+                <CommandBar.SecondaryCommands>
+                    
+                    
+                </CommandBar.SecondaryCommands>                              
+            </CommandBar>
+            <!-- END OF Master - Commandbar-->
+            
+            
+        </RelativePanel>
+    </Grid>
+</Page>
