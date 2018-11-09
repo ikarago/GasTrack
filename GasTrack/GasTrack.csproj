@@ -145,7 +145,6 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Dummy\OldIkaragoLogo.png" />
     <Content Include="Assets\Logo\LogoV1.png" />
     <Content Include="Assets\Logo\NewStoreLogo.scale-100.png" />
     <Content Include="Assets\Logo\NewStoreLogo.scale-125.png" />
